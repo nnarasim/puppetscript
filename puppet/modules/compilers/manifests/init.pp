@@ -80,7 +80,7 @@ class compilers::composer {
         cwd     => "/porject/local",
         command => "/usr/bin/curl -sS https://getcomposer.org/installer | /usr/bin/php",
         creates => "/porject/local/composer.phar",
-        require => [ Package[ "php" ], Package[ "git" ] ],
+        require => [Package[ "git" ] ],
         before => Exec["move-composer"]
     }
 
