@@ -71,7 +71,7 @@ class core::install {
 # Redirects
 
     # add a default "goredirects.txt" file (editable by WP)
-    file { "/project/content/common/goredirects.txt" :
+    file { "/projects/content/common/goredirects.txt" :
         owner   => vagrant,
         group   => vagrant,
         ensure  => file,
