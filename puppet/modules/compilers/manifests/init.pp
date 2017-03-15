@@ -28,7 +28,7 @@ class compilers::grunt {
     exec { "install-grunt" :
         user    => vagrant,
         group   => vagrant,
-        cwd     => "${grunt_path}",
+        cwd     => "/porject/local",
         command => "/usr/bin/npm install",
         before  => Exec["start-grunt"]
     }
@@ -36,7 +36,7 @@ class compilers::grunt {
     exec { "start-grunt" :
         user    => vagrant,
         group   => vagrant,
-        cwd     => "${grunt_path}",
+        cwd     => "/porject/local",
         command => "/usr/bin/grunt watch &" # background job
     }
 
@@ -62,7 +62,7 @@ class compilers::sass {
     exec { "compass-watch" :
         user    => root,
         group   => root,
-        cwd     => "${document_root}/compass",
+        cwd     => "/porject/local/compass",
         command => "/vagrant/local/puppet/modules/compilers/files/compile_sass.sh start"
     }
 
@@ -77,9 +77,9 @@ class compilers::composer {
     exec { "install-composer" :
         user    => root,
         group   => root,
-        cwd     => "${sources_folder}",
+        cwd     => "/porject/local",
         command => "/usr/bin/curl -sS https://getcomposer.org/installer | /usr/bin/php",
-        creates => "${sources_folder}/composer.phar",
+        creates => "/porject/local/composer.phar",
         require => [ Package[ "php" ], Package[ "git" ] ],
         before => Exec["move-composer"]
     }
@@ -87,7 +87,7 @@ class compilers::composer {
     exec { "move-composer" :
         user    => root,
         group   => root,
-        cwd     => "${sources_folder}",
+        cwd     => "/porject/local",
         command => "/bin/mv composer.phar /usr/bin/composer",
         creates => "/usr/bin/composer",
         require => Exec["install-composer"],
@@ -97,9 +97,9 @@ class compilers::composer {
     # Run composer if a composer.json is found
     exec { "run-composer" :
         timeout     => 360,
-        onlyif      => "/usr/bin/test -e ${document_root}/wp-content/composer.json",
-        cwd         => "${document_root}/wp-content",
-        environment => "COMPOSER_HOME=${sources_folder}",
+        onlyif      => "/usr/bin/test -e /porject/local/wp-content/composer.json",
+        cwd         => "/porject/local/wp-content",
+        environment => "COMPOSER_HOME=/porject/local",
         command     => "/usr/bin/composer install",
         require     => Exec["move-composer"]
     }

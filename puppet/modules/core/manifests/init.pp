@@ -58,7 +58,7 @@ class core::install {
 # VHosts
 
     # add virtual host configs for our current site
-    file { "${conf_path}/conf.d/vhosts.conf" :
+    file { "/etc/httpd/conf.d/vhosts.conf" :
         owner   => root,
         group   => root,
         ensure  => file,
@@ -120,7 +120,7 @@ class core::install {
 
     service { "httpd" :
         ensure  => running,
-        require => [ Package[ "httpd" ], Package[ "php" ] ]
+        require => [ Package[ "httpd" ] ]
     }
 
 
@@ -140,19 +140,6 @@ class core::config {
         content => template('core/vagrant_bashrc.erb')
     }
 
-}
-class core::newphp {
-
-    # Switch to the remi repo when we're installing some packages for PHP 5.4+
-    file { "/etc/yum.repos.d/remi.repo" :
-        owner   => root,
-        group   => root,
-        backup  => ".puppet",
-        ensure  => file,
-        mode    => 644,
-        source  => "puppet:///modules/core/remi.repo",
-        before  => Package["php-pecl-apc","php-mcrypt","php-fpm","php-mysql","php-pear"]
-    }
 }
 
 
