@@ -37,7 +37,7 @@ class core::install {
         owner   => root,
         group   => root,
         ensure  => file,
-        mode    => 644,
+        mode    => "644",
         source  => "puppet:///modules/core/httpd.conf",
         require => Package["httpd"],
         before  => Service["httpd"]
@@ -51,7 +51,7 @@ class core::install {
         "/projects/runtime/sessions" ] :
         owner   => vagrant,
         group   => vagrant,
-        mode    => 755,
+        mode    => "755",
         ensure => "directory"
     }
 
@@ -62,7 +62,7 @@ class core::install {
         owner   => root,
         group   => root,
         ensure  => file,
-        mode    => 644,
+        mode    => "644",
         require => Package[ "httpd" ],
         content => template('core/vhosts.erb'),
         before  => Service["httpd"]
@@ -75,7 +75,7 @@ class core::install {
         owner   => vagrant,
         group   => vagrant,
         ensure  => file,
-        mode    => 644,
+        mode    => "644",
         source  => "puppet:///modules/core/goredirects.txt",
         before  => Service["httpd"]
     }
@@ -109,7 +109,7 @@ class core::install {
         owner   => root,
         group   => root,
         ensure  => file,
-        mode    => 644,
+        mode    => "644",
         source  => "puppet:///modules/core/ssl.conf",
         require => Package["mod_ssl"],
         before  => Service["httpd"]
@@ -136,7 +136,7 @@ class core::config {
         owner   => vagrant,
         group   => vagrant,
         ensure  => file,
-        mode    => 644,
+        mode    => "644",
         content => template('core/vagrant_bashrc.erb')
     }
 
