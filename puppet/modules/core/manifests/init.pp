@@ -49,7 +49,6 @@ class core::install {
     # Set up some additional paths
     file { [
         "/projects/content/",
-        "/projects/content",
         "/projects/content/common",
         "/projects/runtime/sessions" ] :
         owner   => vagrant,
