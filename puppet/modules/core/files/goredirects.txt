@@ -1,0 +1,8 @@
+# Simple HTTP 301 Redirects Mappings
+# One redirect per line: /source <at-least-one-space> /target (can be a full URL)
+# Changes to this file take effect immediately, so there is no need to restart Apache.
+# WARNING!: CANNOT use any regex Rewrite rules syntax
+#
+
+# Simple Test Redirect
+/test http://www.google.com

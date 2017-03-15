@@ -1,0 +1,166 @@
+class core::preinstall{
+
+    exec { "rpm-update" :
+        cwd     => "/etc/yum.repos.d",
+        command => "/bin/rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org"
+        
+    }
+	exec { "clear-epel" :
+        cwd     => "/etc/yum.repos.d",
+        command => "/bin/mv epel.repo epel.repo.bk"
+        
+    }
+	   exec { "rpm-elrepo" :
+        cwd     => "/etc/yum.repos.d",
+        command => "/bin/rpm -Uvh http://www.elrepo.org/elrepo-release-6-6.el6.elrepo.noarch.rpm"
+        
+    }
+	#  exec { "yum-update" :
+     #   cwd     => "/etc/yum.repos.d",
+     #   command => "/usr/bin/yum update"
+   # }
+
+}
+class core::install {
+
+# Apache
+
+    package { "httpd" :
+        ensure => present
+    }
+
+    exec { "httpd-on-boot" :
+        command  => "/sbin/chkconfig httpd on",
+    }
+
+    file { "/etc/httpd/conf/httpd.conf" :
+        owner   => root,
+        group   => root,
+        ensure  => file,
+        mode    => 644,
+        source  => "puppet:///modules/core/httpd.conf",
+        require => Package["httpd"],
+        before  => Service["httpd"]
+    }
+
+    # Set up some additional paths
+    file { [
+        "/projects/content/",
+        "/project/content",
+        "/project/content/common",
+        "/projects/runtime/sessions" ] :
+        owner   => vagrant,
+        group   => vagrant,
+        mode    => 755,
+        ensure => "directory"
+    }
+
+# VHosts
+
+    # add virtual host configs for our current site
+    file { "${conf_path}/conf.d/vhosts.conf" :
+        owner   => root,
+        group   => root,
+        ensure  => file,
+        mode    => 644,
+        require => Package[ "httpd" ],
+        content => template('core/vhosts.erb'),
+        before  => Service["httpd"]
+    }
+
+# Redirects
+
+    # add a default "goredirects.txt" file (editable by WP)
+    file { "/project/content/common/goredirects.txt" :
+        owner   => vagrant,
+        group   => vagrant,
+        ensure  => file,
+        mode    => 644,
+        source  => "puppet:///modules/core/goredirects.txt",
+        before  => Service["httpd"]
+    }
+
+# SSL
+
+    package { "mod_ssl" :
+        ensure => present
+    }
+
+    package { "openssl" :
+        ensure => present,
+        before => Exec["generate-SSL-key"]
+    }
+
+    exec { "generate-SSL-key" :
+        cwd     => "/etc/pki/tls/private/",
+        command => "/usr/bin/openssl genrsa -out microsite.local.key 1024",
+        creates => "/etc/pki/tls/private/microsite.local.key",
+        before  => Exec["generate-SSL-cert"]
+    }
+
+    exec { "generate-SSL-cert" :
+        cwd      => "/etc/pki/tls/certs/",
+        command  => "/usr/bin/openssl req -new -key /etc/pki/tls/private/microsite.local.key -x509 -subj '/O=Organization/OU=Organization/C=US/ST=New York/L=New York/CN=microsite.local' -out microsite.local.crt",
+        creates  => "/etc/pki/tls/certs/microsite.local.crt"
+    }
+
+    # Disable the _default_:443 virtualhost to stop conflicts when non-ssl and ssl hostnames are the same
+    file { "/etc/httpd/conf.d/ssl.conf" :
+        owner   => root,
+        group   => root,
+        ensure  => file,
+        mode    => 644,
+        source  => "puppet:///modules/core/ssl.conf",
+        require => Package["mod_ssl"],
+        before  => Service["httpd"]
+    }
+
+# Start Services
+   
+
+    service { "httpd" :
+        ensure  => running,
+        require => [ Package[ "httpd" ], Package[ "php" ] ]
+    }
+
+
+}
+
+class core::config {
+
+
+# Helpers
+
+    # Some common aliases for use in vagrant ssh
+    file { "/home/vagrant/.bashrc" :
+        owner   => vagrant,
+        group   => vagrant,
+        ensure  => file,
+        mode    => 644,
+        content => template('core/vagrant_bashrc.erb')
+    }
+
+}
+class core::newphp {
+
+    # Switch to the remi repo when we're installing some packages for PHP 5.4+
+    file { "/etc/yum.repos.d/remi.repo" :
+        owner   => root,
+        group   => root,
+        backup  => ".puppet",
+        ensure  => file,
+        mode    => 644,
+        source  => "puppet:///modules/core/remi.repo",
+        before  => Package["php-pecl-apc","php-mcrypt","php-fpm","php-mysql","php-pear"]
+    }
+}
+
+
+class core::restart {
+
+    # Restart apache after config
+    exec { "httpd-restart" :
+        command  => "/usr/bin/sudo /sbin/service httpd restart",
+    }
+
+}
