@@ -12,7 +12,7 @@ class core::preinstall{
     }
 	   exec { "rpm-elrepo" :
         cwd     => "/etc/yum.repos.d",
-        command => "/bin/rpm -Uvh http://www.elrepo.org/elrepo-release-6-6.el6.elrepo.noarch.rpm"
+        command => "/bin/rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm"
         
     }
 	#  exec { "yum-update" :
@@ -26,6 +26,9 @@ class core::install {
 # Apache
 
     package { "httpd" :
+        ensure => present
+    }
+	package { "ruby" :
         ensure => present
     }
 
@@ -46,8 +49,8 @@ class core::install {
     # Set up some additional paths
     file { [
         "/projects/content/",
-        "/project/content",
-        "/project/content/common",
+        "/projects/content",
+        "/projects/content/common",
         "/projects/runtime/sessions" ] :
         owner   => vagrant,
         group   => vagrant,

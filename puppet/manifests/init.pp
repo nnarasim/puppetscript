@@ -10,7 +10,7 @@ class { 'core::config' : }
 
 
 
-	class { 'compilers::composer' : }
+	#class { 'compilers::composer' : }
 
 
 	class { 'compilers::sass' : }
