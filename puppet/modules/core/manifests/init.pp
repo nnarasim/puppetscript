@@ -147,7 +147,7 @@ class core::java {
     }
  exec { "install-jce" :
         cwd     => "/tmp/install",
-        command => "wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip",
+        command => "wget --no-check-certificate --no-cookies --header \" Cookie: oraclelicense=accept-securebackup-cookie \" http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip",
 		mode => "755"
         
     }

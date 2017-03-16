@@ -3,7 +3,7 @@
 class wls::java {
 	exec { "download-wls" :
         cwd     => "/opt/oracle",
-        command => "wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn/nt/middleware/12c/12212/fmw_12.2.1.2.0_wls_Disk1_1of1.zip ",
+        command => "wget --no-check-certificate --no-cookies --header \" Cookie: oraclelicense=accept-securebackup-cookie \" http://download.oracle.com/otn/nt/middleware/12c/12212/fmw_12.2.1.2.0_wls_Disk1_1of1.zip ",
 		mode => "755"
     }
 	 exec { "unzip-wls" :
