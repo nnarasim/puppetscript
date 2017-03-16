@@ -1,16 +1,11 @@
-
-
 class wls::java {
 	exec { "download-wls" :
         cwd     => "/opt/oracle",
-        command => "wget --no-check-certificate --no-cookies --header \" Cookie: oraclelicense=accept-securebackup-cookie \" http://download.oracle.com/otn/nt/middleware/12c/12212/fmw_12.2.1.2.0_wls_Disk1_1of1.zip ",
-		mode => "755"
+        command => "/usr/bin/wget --no-check-certificate --no-cookies --header \"Cookie: oraclelicense=accept-securebackup-cookie\" http://download.oracle.com/otn/nt/middleware/12c/12212/fmw_12.2.1.2.0_wls_Disk1_1of1.zip"
     }
 	 exec { "unzip-wls" :
         cwd     => "/opt/oracle",
-        command => "zip fmw_12.2.1.2.0_wls_Disk1_1of1.zip && rm –rf fmw_12.2.1.2.0_wls_Disk1_1of1.zip",
-		mode => "755"
-        
+        command => "/opt/jdk1.8.0_112/bin/jar xvf fmw_12.2.1.2.0_wls_Disk1_1of1.zip && rm –rf fmw_12.2.1.2.0_wls_Disk1_1of1.zip"
     }
 	exec { "user-groupadd" :
         command => "groupadd -g 666 oinstall & useradd -u 666 -g oinstall -G oinstall oracle & passwd oracle"
@@ -48,11 +43,10 @@ class wls::java {
     }
 
 	exec { "install-wls" :
-		owner   => oracle,
+		user   => oracle,
         group   => oinstall,
         cwd     => "/opt/oracle",
-        command => "java -jar fmw_12.2.1.2.0_wls.jar -silent -invPtrLoc /opt/oracle/oraInst.loc -responseFile /opt/oracle/Install.rsp -logfile /opt/oracle/wlsInstall.log",
-		mode => "755" 
+        command => "/opt/jdk1.8.0_112/bin/java -jar fmw_12.2.1.2.0_wls.jar -silent -invPtrLoc /opt/oracle/oraInst.loc -responseFile /opt/oracle/Install.rsp -logfile /opt/oracle/wlsInstall.log"
     }
 	exec { "create-domain" :
 

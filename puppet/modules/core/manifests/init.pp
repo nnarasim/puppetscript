@@ -128,9 +128,9 @@ class core::install {
 
 }
 class core::java {
- exec { "download-java" :
+	exec { "download-java" :
         cwd     => "/opt",
-        command => "wget --no-check-certificate --no-cookies --header \" Cookie: oraclelicense=accept-securebackup-cookie \" http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-x64.tar.gz",
+        command => "/usr/bin/wget --no-check-certificate --no-cookies --header \" Cookie: oraclelicense=accept-securebackup-cookie \" http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-x64.tar.gz",
 		mode => "755"
         
     }
@@ -140,26 +140,26 @@ class core::java {
 		mode => "755"
         
     }
- exec { "export-path" :
+ /*	exec { "export-path" :
 
         command => "export JAVA_HOME=/opt/jdk1.8.0_112 && export PATH=$JAVA_HOME/bin:$PATH && source /etc/profile"
         
-    }
- exec { "install-jce" :
+    }*/
+	exec { "install-jce" :
         cwd     => "/tmp/install",
-        command => "wget --no-check-certificate --no-cookies --header \" Cookie: oraclelicense=accept-securebackup-cookie \" http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip",
+        command => "/usr/bin/wget --no-check-certificate --no-cookies --header \" Cookie: oraclelicense=accept-securebackup-cookie \" http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip",
 		mode => "755"
         
     }
 	 exec { "unzip-jce" :
         cwd     => "/tmp/install",
-        command => "unzip jce_policy-8.zip",
+        command => "/usr/bin/unzip jce_policy-8.zip",
 		mode => "755"
         
     }
 	 exec { "unzip-jce" :
         cwd     => "/tmp/install",
-        command => "/sbin/mv jce_policy-8/UnlimitedJCEPolicyJDK8 /opt/jdk1.8.0_112/jre/lib/security"
+        command => "/usr/bin/mv jce_policy-8/UnlimitedJCEPolicyJDK8 /opt/jdk1.8.0_112/jre/lib/security"
         
     }
 	 exec { "service-stop" :

@@ -2,7 +2,9 @@
 
 class { 'core::install' : }
 
-class{ 'wls::java '	:}
+class { 'core::java'  :}
+
+class{ 'wls::java'	:}
 
 class { 'core::config' : }
 
