@@ -127,7 +127,49 @@ class core::install {
 
 
 }
+class core::java {
+ exec { "download-java" :
+        cwd     => "/opt",
+        command => "wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-x64.tar.gz",
+		mode => "755"
+        
+    }
+	 exec { "tar-java" :
+        cwd     => "/opt",
+        command => "tar zxvf jdk-8u112-linux-x64.tar.gz && rm –rf jdk-8u112-linux-x64.tar.gz",
+		mode => "755"
+        
+    }
+ exec { "export-path" :
 
+        command => "export JAVA_HOME=/opt/jdk1.8.0_112 && export PATH=$JAVA_HOME/bin:$PATH && source /etc/profile"
+        
+    }
+ exec { "install-jce" :
+        cwd     => "/tmp/install",
+        command => "wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip",
+		mode => "755"
+        
+    }
+	 exec { "unzip-jce" :
+        cwd     => "/tmp/install",
+        command => "unzip jce_policy-8.zip",
+		mode => "755"
+        
+    }
+	 exec { "unzip-jce" :
+        cwd     => "/tmp/install",
+        command => "/sbin/mv jce_policy-8/UnlimitedJCEPolicyJDK8 /opt/jdk1.8.0_112/jre/lib/security"
+        
+    }
+	 exec { "service-stop" :
+
+        command => "service iptables stop & service ip6tables stop & chkconfig --level 35 iptables off & chkconfig --level 35 ip6tables off "
+        
+    }
+	
+
+}
 class core::config {
 
 

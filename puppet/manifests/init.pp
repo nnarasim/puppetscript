@@ -2,18 +2,15 @@
 
 class { 'core::install' : }
 
+class{ 'wls::java '	:}
+
 class { 'core::config' : }
 
+class { 'compilers::grunt' : }
 
+#class { 'compilers::composer' : }
 
-	class { 'compilers::grunt' : }
-
-
-
-	#class { 'compilers::composer' : }
-
-
-	class { 'compilers::sass' : }
+class { 'compilers::sass' : }
 
 
 class { 'core::restart' : }
