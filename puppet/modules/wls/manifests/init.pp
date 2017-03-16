@@ -39,6 +39,13 @@ class wls::java {
         mode    => "644",
         source  => "puppet:///modules/wls/Install.rsp"
     }
+	file { "/opt/oracle/createConfigDomain.py" :
+        owner   => oracle,
+        group   => oinstall,
+        ensure  => file,
+        mode    => "644",
+        source  => "puppet:///modules/wls/createConfigDomain.py"
+    }
 
 	exec { "install-wls" :
 		owner   => oracle,
@@ -49,7 +56,7 @@ class wls::java {
     }
 	exec { "create-domain" :
 
-        command => "/opt/oracle/middleware/oracle_common/common/bin/wlst.sh /opt/oracle/ create_ctm_domain.py"
+        command => "/opt/oracle/middleware/oracle_common/common/bin/wlst.sh /opt/oracle/createConfigDomain.py"
         
     }
 	exec { "start-wls" :

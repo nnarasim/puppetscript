@@ -36,7 +36,7 @@ class core::install {
         command  => "/sbin/chkconfig httpd on",
     }
 
-    file { "/etc/httpd/conf/httpd.conf" :
+  /*  file { "/etc/httpd/conf/httpd.conf" :
         owner   => root,
         group   => root,
         ensure  => file,
@@ -45,7 +45,7 @@ class core::install {
         require => Package["httpd"],
         before  => Service["httpd"]
     }
-
+*/
     # Set up some additional paths
     file { [
         "/projects/content/",
@@ -60,7 +60,7 @@ class core::install {
 # VHosts
 
     # add virtual host configs for our current site
-    file { "/etc/httpd/conf.d/vhosts.conf" :
+   /* file { "/etc/httpd/conf.d/vhosts.conf" :
         owner   => root,
         group   => root,
         ensure  => file,
@@ -68,7 +68,7 @@ class core::install {
         require => Package[ "httpd" ],
         content => template('core/vhosts.erb'),
         before  => Service["httpd"]
-    }
+    } */
 
 # Redirects
 
