@@ -107,7 +107,7 @@ class core::install {
     }
 
     # Disable the _default_:443 virtualhost to stop conflicts when non-ssl and ssl hostnames are the same
-    file { "/etc/httpd/conf.d/ssl.conf" :
+   /* file { "/etc/httpd/conf.d/ssl.conf" :
         owner   => root,
         group   => root,
         ensure  => file,
@@ -115,7 +115,7 @@ class core::install {
         source  => "puppet:///modules/core/ssl.conf",
         require => Package["mod_ssl"],
         before  => Service["httpd"]
-    }
+    } */
 
 # Start Services
    
@@ -130,12 +130,12 @@ class core::install {
 class core::java {
 	exec { "download-java" :
         cwd     => "/opt",
-        command => "/usr/bin/wget --no-check-certificate --no-cookies --header \" Cookie: oraclelicense=accept-securebackup-cookie \" http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-x64.tar.gz"
+        command => "/usr/bin/wget --no-check-certificate --no-cookies --header \"Cookie: oraclelicense=accept-securebackup-cookie\" http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-x64.tar.gz"
         
     }
 	 exec { "tar-java" :
         cwd     => "/opt",
-        command => "tar zxvf jdk-8u112-linux-x64.tar.gz && rm –rf jdk-8u112-linux-x64.tar.gz"
+        command => "/usr/bin/tar zxvf jdk-8u112-linux-x64.tar.gz && rm –rf jdk-8u112-linux-x64.tar.gz"
         
     }
  /*	exec { "export-path" :
@@ -144,25 +144,25 @@ class core::java {
         
     }*/
 	exec { "install-jce" :
-        cwd     => "/tmp/install",
-        command => "/usr/bin/wget --no-check-certificate --no-cookies --header \" Cookie: oraclelicense=accept-securebackup-cookie \" http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip"
+        cwd     => "/opt",
+        command => "/usr/bin/wget --no-check-certificate --no-cookies --header \"Cookie: oraclelicense=accept-securebackup-cookie\" http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip"
         
     }
 	 exec { "unzip-jce" :
-        cwd     => "/tmp/install",
+        cwd     => "/opt",
         command => "/usr/bin/unzip jce_policy-8.zip"
         
     }
 	 exec { "mv-jce" :
-        cwd     => "/tmp/install",
+        cwd     => "/opt",
         command => "/usr/bin/mv jce_policy-8/UnlimitedJCEPolicyJDK8 /opt/jdk1.8.0_112/jre/lib/security"
         
     }
-	 exec { "service-stop" :
+	 /*exec { "service-stop" :
 
         command => "service iptables stop & service ip6tables stop & chkconfig --level 35 iptables off & chkconfig --level 35 ip6tables off "
         
-    }
+    }*/
 	
 
 }
