@@ -50,6 +50,7 @@ class core::install {
     file { [
         "/projects/content/",
         "/projects/content/common",
+		"/projects/runtime",
         "/projects/runtime/sessions" ] :
         owner   => vagrant,
         group   => vagrant,
@@ -84,7 +85,7 @@ class core::install {
 
 # SSL
 
-    package { "mod_ssl" :
+  /*  package { "mod_ssl" :
         ensure => present
     }
 
@@ -105,7 +106,7 @@ class core::install {
         command  => "/usr/bin/openssl req -new -key /etc/pki/tls/private/microsite.local.key -x509 -subj '/O=Organization/OU=Organization/C=US/ST=New York/L=New York/CN=microsite.local' -out microsite.local.crt",
         creates  => "/etc/pki/tls/certs/microsite.local.crt"
     }
-
+*/
     # Disable the _default_:443 virtualhost to stop conflicts when non-ssl and ssl hostnames are the same
    /* file { "/etc/httpd/conf.d/ssl.conf" :
         owner   => root,
@@ -135,7 +136,7 @@ class core::java {
     }
 	 exec { "tar-java" :
         cwd     => "/opt",
-        command => "/usr/bin/tar zxvf jdk-8u112-linux-x64.tar.gz && rm –rf jdk-8u112-linux-x64.tar.gz"
+        command => "/usr/bin/tar zxvf jdk-8u112-linux-x64.tar.gz && /usr/bin/rm –rf jdk-8u112-linux-x64.tar.gz"
         
     }
  /*	exec { "export-path" :
@@ -155,7 +156,7 @@ class core::java {
     }
 	 exec { "mv-jce" :
         cwd     => "/opt",
-        command => "/usr/bin/mv jce_policy-8/UnlimitedJCEPolicyJDK8 /opt/jdk1.8.0_112/jre/lib/security"
+        command => "/usr/bin/mv UnlimitedJCEPolicyJDK8 /opt/jdk1.8.0_112/jre/lib/security"
         
     }
 	 /*exec { "service-stop" :
