@@ -152,7 +152,7 @@ class core::java {
         
     }
 
-	file { "/etc/profile.d/javahome.sh" :
+	/*file { "/etc/profile.d/javahome.sh" :
         owner   => root,
         group   => root,
         ensure  => 'present',
@@ -163,7 +163,7 @@ class core::java {
 		cwd     => "/etc/profile.d",
         command => "/usr/bin/sh javahome.sh &"
         
-    } 
+    } */
 	exec { "install-jce" :
         cwd     => "/opt",
         command => "/usr/bin/wget --no-check-certificate --no-cookies --header \"Cookie: oraclelicense=accept-securebackup-cookie\" http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip"
@@ -179,7 +179,7 @@ class core::java {
         command => "/usr/bin/mv -f UnlimitedJCEPolicyJDK8/* /opt/jdk1.8.0_112/jre/lib/security"
         
     }
-	  service { "iptables" :
+	 /* service { "iptables" :
         ensure  => stopped,
         require => [ Package[ "iptables" ] ]
     }
@@ -193,7 +193,7 @@ class core::java {
 	exec { "ip6tables-off" :
         command  => "/sbin/chkconfig --level 35 ip6tables off",
     }
-	
+	*/
 
 }
 class core::config {
