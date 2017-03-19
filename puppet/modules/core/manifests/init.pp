@@ -156,10 +156,18 @@ class core::java {
         command => "export JAVA_HOME=/opt/jdk1.8.0_112 && export PATH=$JAVA_HOME/bin:$PATH && source /etc/profile"
         
     }*/
-	exec { 'export-path':
-		environment => ["JAVA_HOME=/opt/jdk1.8.0_112"],
-		command => 'export $JAVA_HOME'
-		}
+	file { "/etc/profile.d/javahome.sh" :
+        owner   => root,
+        group   => root,
+        ensure  => file,
+        mode    => "644",
+        source  => "puppet:///modules/core/javahome.sh
+    }
+	exec { "set-javahome" :
+		cwd     => "/etc/profile.d/",
+        command => "/usr/bin/sh javahome.sh &"
+        
+    }
 	exec { "install-jce" :
         cwd     => "/opt",
         command => "/usr/bin/wget --no-check-certificate --no-cookies --header \"Cookie: oraclelicense=accept-securebackup-cookie\" http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip"
