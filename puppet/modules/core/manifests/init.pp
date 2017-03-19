@@ -10,15 +10,21 @@ class core::preinstall{
         command => "/bin/mv epel.repo epel.repo.bk"
         
     }
-	   exec { "rpm-elrepo" :
+	exec { "rpm-elrepo" :
         cwd     => "/etc/yum.repos.d",
         command => "/bin/rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm"
         
     }
-	#  exec { "yum-update" :
-     #   cwd     => "/etc/yum.repos.d",
-     #   command => "/usr/bin/yum update"
-   # }
+	exec { "rpm-repo" :
+        cwd     => "/etc/yum.repos.d",
+        command => "/bin/curl --silent --location https://rpm.nodesource.com/setup_7.x | /bin/bash -"
+        
+    }
+	
+	exec { "yum-update" :
+        cwd     => "/etc/yum.repos.d",
+        command => "/usr/bin/yum update"
+		}
 
 }
 class core::install {
@@ -28,9 +34,15 @@ class core::install {
     package { "httpd" :
         ensure => present
     }
-	package { "ruby" :
-        ensure => present
-    }
+	exec { "Ruby-install" :
+        cwd     => "/etc/yum.repos.d",
+        command => "/usr/bin/yum install ruby"
+	}
+	exec { "Ruby-devel" :
+        cwd     => "/opt",
+        command => "/bin/rpm -Uvh ftp://195.220.108.108/linux/centos/7.3.1611/os/x86_64/Packages/ruby-devel-2.0.0.648-29.el7.x86_64.rpm"
+	}
+	
 
     exec { "httpd-on-boot" :
         command  => "/sbin/chkconfig httpd on",
@@ -144,6 +156,10 @@ class core::java {
         command => "export JAVA_HOME=/opt/jdk1.8.0_112 && export PATH=$JAVA_HOME/bin:$PATH && source /etc/profile"
         
     }*/
+	exec { 'export-path':
+		environment => ["JAVA_HOME=/opt/jdk1.8.0_112"],
+		command => 'export $JAVA_HOME'
+		}
 	exec { "install-jce" :
         cwd     => "/opt",
         command => "/usr/bin/wget --no-check-certificate --no-cookies --header \"Cookie: oraclelicense=accept-securebackup-cookie\" http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip"
@@ -156,8 +172,22 @@ class core::java {
     }
 	 exec { "mv-jce" :
         cwd     => "/opt",
-        command => "/usr/bin/mv UnlimitedJCEPolicyJDK8 /opt/jdk1.8.0_112/jre/lib/security"
+        command => "/usr/bin/mv -f UnlimitedJCEPolicyJDK8/* /opt/jdk1.8.0_112/jre/lib/security"
         
+    }
+	  service { "iptables" :
+        ensure  => stopped,
+        require => [ Package[ "iptables" ] ]
+    }
+	  service { "ip6tables" :
+        ensure  => stopped,
+        require => [ Package[ "ip6tables" ] ]
+    }
+	exec { "iptables-off" :
+        command  => "/sbin/chkconfig --level 35 iptables off",
+    }
+	exec { "ip6tables-off" :
+        command  => "/sbin/chkconfig --level 35 ip6tables off",
     }
 	 /*exec { "service-stop" :
 

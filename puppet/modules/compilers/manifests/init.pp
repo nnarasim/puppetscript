@@ -5,16 +5,11 @@ class compilers::grunt {
         ensure => installed,
     }
 
-    # NPM
-    package { "npm" :
-        ensure => installed,
-        before => Exec["npm-update", "grunt-cli"],
-    }
-
     exec { "npm-update" :
         user    => root,
         group   => root,
-        command => "/usr/bin/npm update npm -g"
+        command => "/usr/bin/npm update npm -g",
+		before => Exec["grunt-cli"]
     }
 
     exec { "grunt-cli" :

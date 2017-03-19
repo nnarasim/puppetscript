@@ -1,0 +1,4 @@
+class clean::installers {
+
+}
+
