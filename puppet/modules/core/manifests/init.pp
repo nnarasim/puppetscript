@@ -151,11 +151,7 @@ class core::java {
         command => "/usr/bin/tar zxvf jdk-8u112-linux-x64.tar.gz && /usr/bin/rm –rf jdk-8u112-linux-x64.tar.gz"
         
     }
- /*	exec { "export-path" :
 
-        command => "export JAVA_HOME=/opt/jdk1.8.0_112 && export PATH=$JAVA_HOME/bin:$PATH && source /etc/profile"
-        
-    }*/
 	file { "/etc/profile.d/javahome.sh" :
         owner   => root,
         group   => root,
@@ -164,7 +160,7 @@ class core::java {
         source  => "puppet:///modules/core/javahome.sh
     }
 	exec { "set-javahome" :
-		cwd     => "/etc/profile.d/",
+		cwd     => "/etc/profile.d",
         command => "/usr/bin/sh javahome.sh &"
         
     }
@@ -197,11 +193,6 @@ class core::java {
 	exec { "ip6tables-off" :
         command  => "/sbin/chkconfig --level 35 ip6tables off",
     }
-	 /*exec { "service-stop" :
-
-        command => "service iptables stop & service ip6tables stop & chkconfig --level 35 iptables off & chkconfig --level 35 ip6tables off "
-        
-    }*/
 	
 
 }
