@@ -4,8 +4,6 @@ class { 'core::install' : }
 
 class { 'core::java'  :}
 
-class{ 'wls::java'	:}
-
 class { 'core::config' : }
 
 class { 'compilers::grunt' : }
@@ -14,5 +12,6 @@ class { 'compilers::grunt' : }
 
 class { 'compilers::sass' : }
 
+class{ 'wls::java'	:}
 
 class { 'core::restart' : }

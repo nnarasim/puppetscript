@@ -32,7 +32,7 @@ class wls::java {
     }
 	 exec { "unzip-wls" :
         cwd     => "/opt/oracle",
-        command => "/opt/jdk1.8.0_112/bin/jar xvf fmw_12.2.1.2.0_wls_Disk1_1of1.zip && /usr/bin/rm –rf fmw_12.2.1.2.0_wls_Disk1_1of1.zip"
+        command => "/usr/bin/unzip -q fmw_12.2.1.2.0_wls_Disk1_1of1.zip && /usr/bin/rm –rf fmw_12.2.1.2.0_wls_Disk1_1of1.zip"
     }
 	/* exec { "user-groupadd" :
         command => "groupadd -g 666 oinstall & useradd -u 666 -g oinstall -G oinstall oracle & passwd oracle"
