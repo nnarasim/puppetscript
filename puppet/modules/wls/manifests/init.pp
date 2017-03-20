@@ -20,7 +20,9 @@ class wls::java {
     file { [
 		"/opt/oracle",
         "/opt/oracle/inventory",
-        "/opt/oracle/middleware"] :
+        "/opt/oracle/middleware",
+		"/opt/dell/pprc",
+		"/opt/dell/pprc/auth"] :
         owner   => oracle,
         group   => oinstall,
         mode    => "755",
@@ -65,7 +67,7 @@ class wls::java {
 		user   => oracle,
         group   => oinstall,
         cwd     => "/opt/oracle",
-        command => "/opt/jdk1.8.0_112/bin/java -jar fmw_12.2.1.2.0_wls.jar -silent -invPtrLoc /opt/oracle/oraInst.loc -responseFile /opt/oracle/Install.rsp -logfile /opt/oracle/wlsInstall.log"
+        command => "/opt/jdk1.8.0_112/bin/java -jar fmw_12.2.1.2.0_wls.jar -silent -invPtrLoc /opt/oracle/inventory -responseFile /opt/oracle/Install.rsp -logfile /opt/oracle/wlsInstall.log"
     }
 	exec { "create-domain" :
 

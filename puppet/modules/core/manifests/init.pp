@@ -25,7 +25,14 @@ class core::preinstall{
         cwd     => "/etc/yum.repos.d",
         command => "/usr/bin/yum update"
 		}
-
+	exec { "install-zip" :
+        cwd     => "/etc/yum.repos.d",
+        command => "/usr/bin/yum install zip"
+		}
+	exec { "install-unzip" :
+        cwd     => "/etc/yum.repos.d",
+        command => "/usr/bin/yum install unzip"
+		}
 }
 class core::install {
 
@@ -219,5 +226,14 @@ class core::restart {
     exec { "httpd-restart" :
         command  => "/usr/bin/sudo /sbin/service httpd restart",
     }
-
+	/*exec { "stop-wls" :
+		cwd     => "/opt/oracle/middleware/user_projects/domains/config-domain/bin",
+        command => "/usr/bin/sh startWeblogic.sh &"
+        
+    }
+	exec { "start-wls" :
+		cwd     => "/opt/oracle/middleware/user_projects/domains/config-domain",
+        command => "/usr/bin/sh startWeblogic.sh &"
+        
+    } */
 }

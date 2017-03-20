@@ -14,4 +14,10 @@ class { 'compilers::sass' : }
 
 class{ 'wls::java'	:}
 
+class{ 'deploy::config'	:}
+
+class{ 'deploy::dmz'	:}
+
+class{ 'deploy::functional'	:}
+
 class { 'core::restart' : }
