@@ -41,7 +41,7 @@ class wls::java {
     } */
  
 
-	file { "/opt/oracle/oraInst.loc " :
+	file { "/opt/oracle/oraInst.loc" :
         owner   => oracle,
         group   => oinstall,
         ensure  => file,
@@ -67,7 +67,7 @@ class wls::java {
 		user   => oracle,
         group   => oinstall,
         cwd     => "/opt/oracle",
-        command => "/opt/jdk1.8.0_112/bin/java -jar fmw_12.2.1.2.0_wls.jar -silent -invPtrLoc /opt/oracle/inventory -responseFile /opt/oracle/Install.rsp -logfile /opt/oracle/wlsInstall.log"
+        command => "/opt/jdk1.8.0_112/bin/java -jar fmw_12.2.1.2.0_wls.jar -silent -invPtrLoc /opt/oracle/oraInst.loc -responseFile /opt/oracle/Install.rsp -logfile /opt/oracle/wlsInstall.log"
     }
 	exec { "create-domain" :
 
