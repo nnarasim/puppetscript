@@ -40,12 +40,12 @@ class deploy::config {
         command => "/usr/bin/wget http://192.168.0.100/discovery-microservice-1.0.0.war"
         
     }	
-	exec { "stop-wls" :
+	exec { "stop-config-wls" :
 		cwd     => "/opt/oracle/middleware/user_projects/domains/config-domain/bin",
         command => "/usr/bin/sh startWeblogic.sh &"
         
     }
-	exec { "start-wls" :
+	exec { "start-config-wls" :
 		cwd     => "/opt/oracle/middleware/user_projects/domains/config-domain",
         command => "/usr/bin/sh startWeblogic.sh &"
         
@@ -80,12 +80,12 @@ class deploy::dmz {
         command => "/usr/bin/wget http://192.168.0.100/gateway-microservice-1.0.0.war"
         
     }	
-	exec { "stop-wls" :
+	exec { "stop-domainDMZ-wls" :
 		cwd     => "/opt/oracle/middleware/user_projects/domains/dmz-domain/bin",
         command => "/usr/bin/sh startWeblogic.sh &"
         
     }
-	exec { "start-wls" :
+	exec { "start-domainDMZ-wls" :
 		cwd     => "/opt/oracle/middleware/user_projects/domains/dmz-domain",
         command => "/usr/bin/sh startWeblogic.sh &"
         
@@ -150,12 +150,12 @@ class deploy::functional {
         command => "/usr/bin/wget http://192.168.0.100/assets-microservice-1.0.0.war"
         
     }	*/
-	exec { "stop-wls" :
+	exec { "stop-domainDMZ-wls" :
 		cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/bin",
         command => "/usr/bin/sh startWeblogic.sh &"
         
     }
-	exec { "start-wls" :
+	exec { "start-domainDMZ-wls" :
 		cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain",
         command => "/usr/bin/sh startWeblogic.sh &"
         
