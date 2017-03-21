@@ -21,16 +21,16 @@ class compilers::grunt {
     }
 
     exec { "install-grunt" :
-        user    => vagrant,
-        group   => vagrant,
+        user    => root,
+        group   => root,
         cwd     => "/projects/local",
         command => "/usr/bin/npm install",
         before  => Exec["start-grunt"]
     }
 
     exec { "start-grunt" :
-        user    => vagrant,
-        group   => vagrant,
+        user    => root,
+        group   => root,
         cwd     => "/projects/local",
         command => "/usr/bin/grunt watch &" # background job
     }

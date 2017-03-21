@@ -5,11 +5,11 @@ class core::preinstall{
         command => "/bin/rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org"
         
     }
-	exec { "clear-epel" :
+	/*exec { "clear-epel" :
         cwd     => "/etc/yum.repos.d",
         command => "/bin/mv epel.repo epel.repo.bk"
         
-    }
+    } */
 	exec { "rpm-elrepo" :
         cwd     => "/etc/yum.repos.d",
         command => "/bin/rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm"
@@ -74,9 +74,10 @@ class core::install {
         "/projects/content/",
         "/projects/content/common",
 		"/projects/runtime",
+		"/projects/local",
         "/projects/runtime/sessions" ] :
-        owner   => vagrant,
-        group   => vagrant,
+        owner   => root,
+        group   => root,
         mode    => "755",
         ensure => "directory"
     }
@@ -98,8 +99,8 @@ class core::install {
 
     # add a default "goredirects.txt" file (editable by WP)
     file { "/projects/content/common/goredirects.txt" :
-        owner   => vagrant,
-        group   => vagrant,
+        owner   => root,
+        group   => root,
         ensure  => file,
         mode    => "644",
         source  => "puppet:///modules/core/goredirects.txt",
@@ -159,10 +160,14 @@ class core::java {
     }
 	 exec { "tar-java" :
         cwd     => "/opt",
-        command => "/usr/bin/tar zxvf jdk-8u112-linux-x64.tar.gz && /usr/bin/rm –rf jdk-8u112-linux-x64.tar.gz"
+        command => "/usr/bin/tar zxvf jdk-8u112-linux-x64.tar.gz"
         
     }
-
+	 exec { "removeTar-java" :
+        cwd     => "/opt",
+        command => "/usr/bin/rm –rf jdk-8u112-linux-x64.tar.gz"
+        
+    }
 	/*file { "/etc/profile.d/javahome.sh" :
         owner   => root,
         group   => root,
@@ -190,6 +195,11 @@ class core::java {
         command => "/usr/bin/mv -f UnlimitedJCEPolicyJDK8/* /opt/jdk1.8.0_112/jre/lib/security"
         
     }
+	exec { "remove-zip-jce" :
+        cwd     => "/opt",
+        command => "/usr/bin/rm –rf jce_policy-8.zip"
+        
+    }
 	 /* service { "iptables" :
         ensure  => stopped,
         require => [ Package[ "iptables" ] ]
@@ -214,8 +224,8 @@ class core::config {
 
     # Some common aliases for use in vagrant ssh
     file { "/home/vagrant/.bashrc" :
-        owner   => vagrant,
-        group   => vagrant,
+        owner   => root,
+        group   => root,
         ensure  => file,
         mode    => "644",
         content => template('core/vagrant_bashrc.erb')

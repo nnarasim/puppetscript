@@ -4,7 +4,7 @@ class { 'core::install' : }
 
 class { 'core::java'  :}
 
-class { 'core::config' : }
+#class { 'core::config' : }
 
 class { 'compilers::grunt' : }
 
