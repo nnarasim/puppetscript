@@ -6,7 +6,7 @@ class deploy::config {
         mode    => "644",
         source  => "puppet:///modules/deploy/createConfigDomain.py"
     }
-	file { " /opt/dell/pprc/auth/authmatrix.json" :
+	file { "/opt/dell/pprc/auth/authmatrix.json" :
         owner   => oracle,
         group   => oinstall,
         ensure  => file,
@@ -150,12 +150,12 @@ class deploy::functional {
         command => "/usr/bin/wget http://192.168.0.100/assets-microservice-1.0.0.war"
         
     }	*/
-	exec { "stop-domainDMZ-wls" :
+	exec { "stop-domainFunctional-wls" :
 		cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/bin",
         command => "/usr/bin/sh startWeblogic.sh &"
         
     }
-	exec { "start-domainDMZ-wls" :
+	exec { "start-domainFunctional-wls" :
 		cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain",
         command => "/usr/bin/sh startWeblogic.sh &"
         

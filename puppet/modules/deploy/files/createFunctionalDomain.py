@@ -1,7 +1,7 @@
 #############create_functional_domain.py##########
 #!/usr/bin/python
 import os, sys
-createDomain('/opt/oracle/middleware/wlserver/common/templates/wls/wls.jar','/opt/oracle/middleware/user_projects/domains/functional-domain','weblogic',’Dell_123$')
+createDomain('/opt/oracle/middleware/wlserver/common/templates/wls/wls.jar','/opt/oracle/middleware/user_projects/domains/functional-domain','weblogic','Dell_123$')
 readDomain('/opt/oracle/middleware/user_projects/domains/functional-domain')
 cd('/Server/AdminServer')
 cmo.setName('AdminServer')
