@@ -25,13 +25,18 @@ class deploy::config {
         command => "/opt/oracle/middleware/oracle_common/common/bin/wlst.sh /opt/oracle/createConfigDomain.py"
         
     }
+	exec { "clean-domainConfig" :
+        cwd     => "/opt/oracle/middleware/user_projects/domains/config-domain/autodeploy",
+        command => "/usr/bin/rm -rf *"
+        
+    }	
 	exec { "get-config_war" :
-        cwd     => "/opt/oracle/middleware/user_projects/domains/config-domain",
+        cwd     => "/opt/oracle/middleware/user_projects/domains/config-domain/autodeploy",
         command => "/usr/bin/wget http://192.168.0.100/config-microservice-1.0.0.war"
         
     }	
 	exec { "get-discovery_war" :
-        cwd     => "/opt/oracle/middleware/user_projects/domains/config-domain",
+        cwd     => "/opt/oracle/middleware/user_projects/domains/config-domain/autodeploy",
         command => "/usr/bin/wget http://192.168.0.100/discovery-microservice-1.0.0.war"
         
     }	
@@ -60,13 +65,18 @@ class deploy::dmz {
         command => "/opt/oracle/middleware/oracle_common/common/bin/wlst.sh /opt/oracle/createDMZDomain.py"
         
     }
+	exec { "clean-domainDMZ" :
+        cwd     => "/opt/oracle/middleware/user_projects/domains/dmz-domain/autodeploy",
+        command => "/usr/bin/rm -rf *"
+        
+    }
 	exec { "get-auth_war" :
-        cwd     => "/opt/oracle/middleware/user_projects/domains/dmz-domain",
+        cwd     => "/opt/oracle/middleware/user_projects/domains/dmz-domain/autodeploy",
         command => "/usr/bin/wget http://192.168.0.100/auth-microservice-1.0.0.war"
         
     }	
 	exec { "get-gateway_war" :
-        cwd     => "/opt/oracle/middleware/user_projects/domains/dmz-domain",
+        cwd     => "/opt/oracle/middleware/user_projects/domains/dmz-domain/autodeploy",
         command => "/usr/bin/wget http://192.168.0.100/gateway-microservice-1.0.0.war"
         
     }	
@@ -95,43 +105,48 @@ class deploy::functional {
         command => "/opt/oracle/middleware/oracle_common/common/bin/wlst.sh /opt/oracle/createFunctionalDomain.py"
         
     }
+	exec { "clean-domainFunctional" :
+        cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/autodeploy",
+        command => "/usr/bin/rm -rf *"
+        
+    }
 	exec { "get-alerts_war" :
-        cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain",
+        cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/autodeploy",
         command => "/usr/bin/wget http://192.168.0.100/alerts-microservice-1.0.0.war"
         
     }	
 	exec { "get-assets_war" :
-        cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain",
+        cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/autodeploy",
         command => "/usr/bin/wget http://192.168.0.100/assets-microservice-1.0.0.war"
         
     }	
 	exec { "get-cases_war" :
-        cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain",
+        cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/autodeploy",
         command => "/usr/bin/wget http://192.168.0.100/cases-microservice-1.0.0.war"
         
     }	
 	exec { "get-dispatch_war" :
-        cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain",
+        cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/autodeploy",
         command => "/usr/bin/wget http://192.168.0.100/dispatch-microservice-1.0.0.war"
         
     }	
 	exec { "get-recommendation_war" :
-        cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain",
+        cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/autodeploy",
         command => "/usr/bin/wget http://192.168.0.100/recommendation-microservice-1.0.0.war"
         
     }	
 	exec { "get-metrics_war" :
-        cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain",
+        cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/autodeploy",
         command => "/usr/bin/wget http://192.168.0.100/metrics-microservice-1.0.0.war"
         
     }	
 	/*exec { "get-alerts_war" :
-        cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain",
+        cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/autodeploy",
         command => "/usr/bin/wget http://192.168.0.100/alerts-microservice-1.0.0.war"
         
     }	
 	exec { "get-assets_war" :
-        cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain",
+        cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/autodeploy",
         command => "/usr/bin/wget http://192.168.0.100/assets-microservice-1.0.0.war"
         
     }	*/
