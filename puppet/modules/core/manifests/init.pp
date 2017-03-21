@@ -27,11 +27,15 @@ class core::preinstall{
 		}
 	exec { "install-zip" :
         cwd     => "/etc/yum.repos.d",
-        command => "/usr/bin/yum install zip"
+        command => "/usr/bin/yum -y install zip"
 		}
 	exec { "install-unzip" :
         cwd     => "/etc/yum.repos.d",
-        command => "/usr/bin/yum install unzip"
+        command => "/usr/bin/yum -y install unzip"
+		}
+	exec { "install-wget" :
+        cwd     => "/etc/yum.repos.d",
+        command => "/usr/bin/yum -y install wget"
 		}
 }
 class core::install {
@@ -43,7 +47,7 @@ class core::install {
     }
 	exec { "Ruby-install" :
         cwd     => "/etc/yum.repos.d",
-        command => "/usr/bin/yum install ruby"
+        command => "/usr/bin/yum -y install ruby"
 	}
 	exec { "Ruby-devel" :
         cwd     => "/opt",
