@@ -6,10 +6,7 @@ class deploy::config {
         mode    => "644",
         source  => "puppet:///modules/deploy/createConfigDomain.py"
     }
-	  file { [
-		"/opt/dell/pprc",
-		"/opt/dell/pprc/config-repo",
-		"/opt/dell/pprc/auth"] :
+	  file { ["/opt/dell/pprc/config-repo"] :
         owner   => oracle,
         group   => oinstall,
         mode    => "755",
