@@ -30,19 +30,19 @@ class wls::java {
     }
 	/*exec { "download-wls" :
         cwd     => "/opt/oracle",
-        command => "/usr/bin/wget --no-check-certificate --no-cookies --header \"Cookie: oraclelicense=accept-securebackup-cookie\" http://download.oracle.com/otn/nt/middleware/12c/12212/fmw_12.2.1.2.0_wls_quick_Disk1_1of1.zip"
+        command => "/usr/bin/wget --no-check-certificate --no-cookies --header \"Cookie: oraclelicense=accept-securebackup-cookie\" http://download.oracle.com/otn/nt/middleware/12c/12212/fmw_12.2.1.2.0_wls_Disk1_1of1.zip"
     } */
 		exec { "download-wls" :
         cwd     => "/opt/oracle",
-        command => "/usr/bin/wget http://172.20.49.153/fmw_12.2.1.2.0_wls_quick_Disk1_1of1.zip"
+        command => "/usr/bin/wget http://172.20.49.153/fmw_12.2.1.2.0_wls_Disk1_1of1.zip"
     }
 	 exec { "unzip-wls" :
         cwd     => "/opt/oracle",
-        command => "/usr/bin/unzip -q fmw_12.2.1.2.0_wls_quick_Disk1_1of1.zip"
+        command => "/usr/bin/unzip -q fmw_12.2.1.2.0_wls_Disk1_1of1.zip"
     }
 	 exec { "remove-zip-wls" :
         cwd     => "/opt/oracle",
-        command => "/usr/bin/rm –rf fmw_12.2.1.2.0_wls_quick_Disk1_1of1.zip"
+        command => "/usr/bin/rm –rf fmw_12.2.1.2.0_wls_Disk1_1of1.zip"
     }
 	/* exec { "user-groupadd" :
         command => "groupadd -g 666 oinstall & useradd -u 666 -g oinstall -G oinstall oracle & passwd oracle"
@@ -81,7 +81,7 @@ class wls::java {
 		user   => oracle,
         group   => oinstall,
         cwd     => "/opt/oracle",
-        command => "/opt/jdk1.8.0_112/bin/java -jar fmw_12.2.1.2.0_wls_quick.jar -silent -invPtrLoc /opt/oracle/oraInst.loc -responseFile /opt/oracle/Install.rsp -logfile /opt/oracle/wlsInstall.log"
+        command => "/opt/jdk1.8.0_112/bin/java -jar fmw_12.2.1.2.0_wls.jar -silent -invPtrLoc /opt/oracle/oraInst.loc -responseFile /opt/oracle/Install.rsp -logfile /opt/oracle/wlsInstall.log"
     }
 	exec { "firewall-addPort" :
 		user   => root,
