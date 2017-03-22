@@ -105,7 +105,7 @@ class wls::java {
     }
 	exec { "start-wls" :
 		cwd     => "/opt/oracle/middleware/user_projects/domains/config-domain",
-        command => "/usr/bin/sh startWeblogic.sh &"
+        command => "/usr/bin/sh startWebLogic.sh &"
         
     }
 */

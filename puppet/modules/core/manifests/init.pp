@@ -243,12 +243,12 @@ class core::restart {
     }
 	/*exec { "stop-wls" :
 		cwd     => "/opt/oracle/middleware/user_projects/domains/config-domain/bin",
-        command => "/usr/bin/sh startWeblogic.sh &"
+        command => "/usr/bin/sh stopWebLogic.sh"
         
     }
 	exec { "start-wls" :
 		cwd     => "/opt/oracle/middleware/user_projects/domains/config-domain",
-        command => "/usr/bin/sh startWeblogic.sh &"
+        command => "/usr/bin/sh startWebLogic.sh &"
         
     } */
 }

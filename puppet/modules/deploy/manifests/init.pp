@@ -77,12 +77,12 @@ class deploy::config {
     }	
 	exec { "stop-config-wls" :
 		cwd     => "/opt/oracle/middleware/user_projects/domains/config-domain/bin",
-        command => "/usr/bin/sh startWeblogic.sh &"
+        command => "/usr/bin/sh stopWebLogic.sh"
         
     }
 	exec { "start-config-wls" :
 		cwd     => "/opt/oracle/middleware/user_projects/domains/config-domain",
-        command => "/usr/bin/sh startWeblogic.sh &"
+        command => "/usr/bin/sh startWebLogic.sh &"
         
     }
 }
@@ -117,13 +117,13 @@ class deploy::dmz {
     }	
 	exec { "stop-domainDMZ-wls" :
 		cwd     => "/opt/oracle/middleware/user_projects/domains/dmz-domain/bin",
-        command => "/usr/bin/sh startWeblogic.sh &"
+        command => "/usr/bin/sh stopWebLogic.sh"
         
     }
 	exec { "start-domainDMZ-wls" :
 		timeout     => 660,
 		cwd     => "/opt/oracle/middleware/user_projects/domains/dmz-domain",
-        command => "/usr/bin/sh startWeblogic.sh &"
+        command => "/usr/bin/sh startWebLogic.sh &"
         
     }
 }
@@ -176,24 +176,17 @@ class deploy::functional {
         command => "/usr/bin/wget http://172.20.49.153/metrics-microservice-1.0.0.war"
         
     }	
-	/*exec { "get-alerts_war" :
-        cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/autodeploy",
-        command => "/usr/bin/wget http://172.20.49.153/alerts-microservice-1.0.0.war"
-        
-    }	
-	exec { "get-assets_war" :
-        cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/autodeploy",
-        command => "/usr/bin/wget http://172.20.49.153/assets-microservice-1.0.0.war"
-        
-    }	*/
+
 	exec { "stop-domainFunctional-wls" :
 		cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/bin",
-        command => "/usr/bin/sh startWeblogic.sh &"
+        command => "/usr/bin/sh stopWebLogic.sh"
         
     }
-	exec { "start-domainFunctional-wls" :
+	exec { "start-domainFunctional-wls" 
+		user   => root,
+        group   => root,
 		cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain",
-        command => "/usr/bin/sh startWeblogic.sh &"
+        command => "/usr/bin/sh startWebLogic.sh &"
         
     }
 
