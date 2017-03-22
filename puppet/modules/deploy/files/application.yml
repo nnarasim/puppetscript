@@ -1,0 +1,9 @@
+---        
+elasticsearch:
+  cluster:
+    name: ES-DIT
+  index: saiereportv2
+  shield:
+    user:
+  port: 9300
+  hosts: 172.20.49.29,172.20.49.77,172.20.49.78,172.20.49.80,170.20.49.81        

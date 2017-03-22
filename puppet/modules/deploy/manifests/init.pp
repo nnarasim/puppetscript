@@ -6,6 +6,15 @@ class deploy::config {
         mode    => "644",
         source  => "puppet:///modules/deploy/createConfigDomain.py"
     }
+	  file { [
+		"/opt/dell/pprc",
+		"/opt/dell/pprc/config-repo",
+		"/opt/dell/pprc/auth"] :
+        owner   => oracle,
+        group   => oinstall,
+        mode    => "755",
+        ensure => "directory"
+    }
 	file { "/opt/dell/pprc/auth/authmatrix.json" :
         owner   => oracle,
         group   => oinstall,
@@ -19,6 +28,35 @@ class deploy::config {
         ensure  => file,
         mode    => "644",
         source  => "puppet:///modules/deploy/techdirect.cer"
+    }
+	file { "/opt/dell/pprc/config-repo/application.yml" :
+        owner   => oracle,
+        group   => oinstall,
+        ensure  => file,
+        mode    => "644",
+        source  => "puppet:///modules/deploy/application.yml"
+    }
+	file { "/opt/dell/pprc/config-repo/gateway.yml" :
+        owner   => oracle,
+        group   => oinstall,
+        ensure  => file,
+        mode    => "644",
+        source  => "puppet:///modules/deploy/gateway.yml"
+    }
+	exec { "git-init" :
+        cwd     => "/opt/dell/pprc/config-repo",
+        command => "/usr/bin/git init"
+        
+    }
+	exec { "git-add" :
+        cwd     => "/opt/dell/pprc/config-repo",
+        command => "/usr/bin/git add --all"
+        
+    }
+	exec { "git-commit" :
+        cwd     => "/opt/dell/pprc/config-repo",
+        command => "/usr/bin/git commit -m \"Intial version\""
+        
     }
 	exec { "create-domainConfig" :
 
@@ -86,6 +124,7 @@ class deploy::dmz {
         
     }
 	exec { "start-domainDMZ-wls" :
+		timeout     => 660,
 		cwd     => "/opt/oracle/middleware/user_projects/domains/dmz-domain",
         command => "/usr/bin/sh startWeblogic.sh &"
         
