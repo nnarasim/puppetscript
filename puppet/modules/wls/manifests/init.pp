@@ -21,6 +21,7 @@ class wls::java {
 		"/opt/oracle",
         "/opt/oracle/inventory",
         "/opt/oracle/middleware",
+		"/opt/dell",
 		"/opt/dell/pprc",
 		"/opt/dell/pprc/auth"] :
         owner   => oracle,
