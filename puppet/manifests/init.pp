@@ -1,6 +1,6 @@
 #class { 'core::preinstall' : }
 
-class { 'core::install' : }
+#class { 'core::install' : }
 
 class { 'core::java'  :}
 
@@ -20,4 +20,4 @@ class{ 'deploy::dmz'	:}
 
 class{ 'deploy::functional'	:}
 
-class { 'core::restart' : }
+#class { 'core::restart' : }

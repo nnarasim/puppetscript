@@ -77,7 +77,21 @@ class wls::java {
         cwd     => "/opt/oracle",
         command => "/opt/jdk1.8.0_112/bin/java -jar fmw_12.2.1.2.0_wls_quick.jar -silent -invPtrLoc /opt/oracle/oraInst.loc -responseFile /opt/oracle/Install.rsp -logfile /opt/oracle/wlsInstall.log"
     }
-	exec { "create-domain" :
+	exec { "firewall-addPort" :
+		user   => root,
+        group   => root,
+        cwd     => "/opt/oracle",
+        command => "/usr/bin/firewall-cmd --permanent --zone=public --add-port=80/tcp"
+    }
+	
+	exec { "firewall-reload" :
+		user   => root,
+        group   => root,
+        cwd     => "/opt/oracle",
+        command => "/usr/bin/firewall-cmd --reload"
+    }
+	
+/*	exec { "create-domain" :
 
         command => "/opt/oracle/middleware/oracle_common/common/bin/wlst.sh /opt/oracle/createConfigDomain.py"
         
@@ -87,6 +101,6 @@ class wls::java {
         command => "/usr/bin/sh startWeblogic.sh &"
         
     }
-
+*/
 }
 

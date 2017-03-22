@@ -37,14 +37,6 @@ class core::preinstall{
         cwd     => "/etc/yum.repos.d",
         command => "/usr/bin/yum -y install wget"
 		}
-}
-class core::install {
-
-# Apache
-
-    package { "httpd" :
-        ensure => present
-    }
 	exec { "Ruby-install" :
         cwd     => "/etc/yum.repos.d",
         command => "/usr/bin/yum -y install ruby"
@@ -53,6 +45,15 @@ class core::install {
         cwd     => "/opt",
         command => "/bin/rpm -Uvh ftp://195.220.108.108/linux/centos/7.3.1611/os/x86_64/Packages/ruby-devel-2.0.0.648-29.el7.x86_64.rpm"
 	}
+	
+}
+class core::install {
+
+# Apache
+
+    package { "httpd" :
+        ensure => present
+    }
 	
 
     exec { "httpd-on-boot" :
