@@ -70,7 +70,13 @@ class wls::java {
         mode    => "644",
         source  => "puppet:///modules/wls/createConfigDomain.py"
     }
-
+	file { "/opt/oracle/wlsInstall.log" :
+        owner   => oracle,
+        group   => oinstall,
+        ensure  => file,
+        mode    => "644",
+        source  => "puppet:///modules/wls/wlsInstall.log"
+    }
 	exec { "install-wls" :
 		user   => oracle,
         group   => oinstall,
