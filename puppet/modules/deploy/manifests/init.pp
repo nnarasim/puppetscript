@@ -67,12 +67,12 @@ class deploy::config {
     }	
 	exec { "get-config_war" :
         cwd     => "/opt/oracle/middleware/user_projects/domains/config-domain/autodeploy",
-        command => "/usr/bin/wget http://172.20.49.153/config-microservice-1.0.0.war"
+        command => "/usr/bin/wget http://10.49.98.196/config-microservice-1.0.0.war"
         
     }	
 	exec { "get-discovery_war" :
         cwd     => "/opt/oracle/middleware/user_projects/domains/config-domain/autodeploy",
-        command => "/usr/bin/wget http://172.20.49.153/discovery-microservice-1.0.0.war"
+        command => "/usr/bin/wget http://10.49.98.196/discovery-microservice-1.0.0.war"
         
     }	
 	exec { "stop-config-wls" :
@@ -107,12 +107,12 @@ class deploy::dmz {
     }
 	exec { "get-auth_war" :
         cwd     => "/opt/oracle/middleware/user_projects/domains/dmz-domain/autodeploy",
-        command => "/usr/bin/wget http://172.20.49.153/auth-microservice-1.0.0.war"
+        command => "/usr/bin/wget http://10.49.98.196/auth-microservice-1.0.0.war"
         
     }	
 	exec { "get-gateway_war" :
         cwd     => "/opt/oracle/middleware/user_projects/domains/dmz-domain/autodeploy",
-        command => "/usr/bin/wget http://172.20.49.153/gateway-microservice-1.0.0.war"
+        command => "/usr/bin/wget http://10.49.98.196/gateway-microservice-1.0.0.war"
         
     }	
 	exec { "stop-domainDMZ-wls" :
@@ -148,32 +148,32 @@ class deploy::functional {
     }
 	exec { "get-alerts_war" :
         cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/autodeploy",
-        command => "/usr/bin/wget http://172.20.49.153/alerts-microservice-1.0.0.war"
+        command => "/usr/bin/wget http://10.49.98.196/alerts-microservice-1.0.0.war"
         
     }	
 	exec { "get-assets_war" :
         cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/autodeploy",
-        command => "/usr/bin/wget http://172.20.49.153/assets-microservice-1.0.0.war"
+        command => "/usr/bin/wget http://10.49.98.196/assets-microservice-1.0.0.war"
         
     }	
 	exec { "get-cases_war" :
         cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/autodeploy",
-        command => "/usr/bin/wget http://172.20.49.153/cases-microservice-1.0.0.war"
+        command => "/usr/bin/wget http://10.49.98.196/cases-microservice-1.0.0.war"
         
     }	
 	exec { "get-dispatch_war" :
         cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/autodeploy",
-        command => "/usr/bin/wget http://172.20.49.153/dispatch-microservice-1.0.0.war"
+        command => "/usr/bin/wget http://10.49.98.196/dispatch-microservice-1.0.0.war"
         
     }	
 	exec { "get-recommendation_war" :
         cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/autodeploy",
-        command => "/usr/bin/wget http://172.20.49.153/recommendation-microservice-1.0.0.war"
+        command => "/usr/bin/wget http://10.49.98.196/recommendation-microservice-1.0.0.war"
         
     }	
 	exec { "get-metrics_war" :
         cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain/autodeploy",
-        command => "/usr/bin/wget http://172.20.49.153/metrics-microservice-1.0.0.war"
+        command => "/usr/bin/wget http://10.49.98.196/metrics-microservice-1.0.0.war"
         
     }	
 

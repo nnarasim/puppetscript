@@ -35,7 +35,7 @@ class wls::java {
     } */
 		exec { "download-wls" :
         cwd     => "/opt/oracle",
-        command => "/usr/bin/wget http://172.20.49.153/fmw_12.2.1.2.0_wls_Disk1_1of1.zip"
+        command => "/usr/bin/wget http://10.49.98.196/fmw_12.2.1.2.0_wls_Disk1_1of1.zip"
     }
 	 exec { "unzip-wls" :
         cwd     => "/opt/oracle",
