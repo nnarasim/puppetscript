@@ -182,7 +182,7 @@ class deploy::functional {
         command => "/usr/bin/sh stopWebLogic.sh"
         
     }
-	exec { "start-domainFunctional-wls" 
+	exec { "start-domainFunctional-wls" :
 		cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain",
         command => "/usr/bin/sh startWebLogic.sh &"
         
