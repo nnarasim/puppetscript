@@ -183,8 +183,6 @@ class deploy::functional {
         
     }
 	exec { "start-domainFunctional-wls" 
-		user   => root,
-        group   => root,
 		cwd     => "/opt/oracle/middleware/user_projects/domains/functional-domain",
         command => "/usr/bin/sh startWebLogic.sh &"
         
