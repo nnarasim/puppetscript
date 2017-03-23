@@ -14,6 +14,8 @@ class { 'compilers::sass' : }
 
 class{ 'wls::java'	:}
 
+class{ 'redis::install'	:}
+
 class{ 'deploy::config'	:}
 
 class{ 'deploy::dmz'	:}
