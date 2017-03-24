@@ -45,6 +45,14 @@ class core::preinstall{
         cwd     => "/opt",
         command => "/bin/rpm -Uvh ftp://195.220.108.108/linux/centos/7.3.1611/os/x86_64/Packages/ruby-devel-2.0.0.648-29.el7.x86_64.rpm"
 	}
+	exec { "fedora-repoGet" :
+        cwd     => "/etc/yum.repos.d",
+        command => "/bin/wget -r --no-parent -A 'epel-release-*.rpm' http://dl.fedoraproject.org/pub/epel/7/x86_64/e/"
+	}
+	exec { "fedora-repi-init" :
+        cwd     => "/etc/yum.repos.d",
+        command => "/bin/rpm -Uvh dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-*.rpm"
+	}
 	
 }
 class core::install {
@@ -174,7 +182,7 @@ class core::java {
         group   => root,
         ensure  => 'present',
         mode    => "644",
-        source  => "puppet:///modules/core/javahome.sh
+        source  => "puppet:///modules/core/javahome.sh"
     }
 	exec { "set-javahome" :
 		cwd     => "/etc/profile.d",
